@@ -1,0 +1,38 @@
+[
+  {
+    "id": "inv-001",
+    "invoiceNo": "INV-2569-001",
+    "customer": "บริษัท ไทยเทคโนโลยีดิจิทัล จำกัด",
+    "issueDate": "2026-10-05",
+    "dueDate": "2026-11-05",
+    "subtotal": 300000,
+    "vatAmount": 21000,
+    "grandTotal": 321000,
+    "status": "paid",
+    "description": "บริการให้คำปรึกษาและวางระบบการบริหารจัดการบัญชี"
+  },
+  {
+    "id": "inv-002",
+    "invoiceNo": "INV-2569-002",
+    "customer": "ห้างหุ้นส่วนจำกัด สหพาณิชย์ขนส่ง",
+    "issueDate": "2026-10-12",
+    "dueDate": "2026-11-12",
+    "subtotal": 450000,
+    "vatAmount": 31500,
+    "grandTotal": 481500,
+    "status": "pending",
+    "description": "สัญญาบริการตรวจสอบและสอบทานบัญชีภายในรอบไตรมาส"
+  },
+  {
+    "id": "inv-003",
+    "invoiceNo": "INV-2569-003",
+    "customer": "บริษัท พัฒนกิจการเกษตรกรรม จำกัด",
+    "issueDate": "2026-09-18",
+    "dueDate": "2026-10-18",
+    "subtotal": 120000,
+    "vatAmount": 8400,
+    "grandTotal": 128400,
+    "status": "overdue",
+    "description": "บริการจัดทำงบการเงินและเอกสารยื่นภาษีเงินได้นิติบุคคล"
+  }
+]

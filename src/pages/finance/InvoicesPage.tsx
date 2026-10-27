@@ -1,0 +1,288 @@
+import React, { useState } from 'react';
+import { Plus, Search, Filter, Receipt, CheckCircle } from 'lucide-react';
+import { Header } from '../../components/layout/Header.tsx';
+import { UI } from '../../constants/index.ts';
+import { useAppStore } from '../../stores/app.store.ts';
+import { InvoiceItem } from '../../types/common.types.ts';
+import { formatCurrency } from '../../utils/format.ts';
+
+export const InvoicesPage: React.FC = () => {
+  const invoices = useAppStore((state) => state.invoices);
+  const settings = useAppStore((state) => state.settings);
+  const addInvoice = useAppStore((state) => state.addInvoice);
+  const updateInvoiceStatus = useAppStore((state) => state.updateInvoiceStatus);
+
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // New invoice state
+  const [customer, setCustomer] = useState('');
+  const [description, setDescription] = useState('');
+  const [subtotalStr, setSubtotalStr] = useState('');
+  const [dueDate, setDueDate] = useState('2026-11-27');
+
+  const subtotal = parseFloat(subtotalStr) || 0;
+  const vatAmount = (subtotal * settings.defaultVatRate) / 100;
+  const grandTotal = subtotal + vatAmount;
+
+  const filtered = invoices.filter((inv) => {
+    const matchesSearch =
+      inv.invoiceNo.toLowerCase().includes(search.toLowerCase()) ||
+      inv.customer.toLowerCase().includes(search.toLowerCase());
+    const matchesStatus = statusFilter === 'all' || inv.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
+
+  const handleCreate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customer || subtotal <= 0) return;
+
+    const nextNo = `${settings.invoicePrefix}${String(invoices.length + 1).padStart(3, '0')}`;
+    const newInv: InvoiceItem = {
+      id: `inv-${Date.now()}`,
+      invoiceNo: nextNo,
+      customer,
+      issueDate: '2026-10-27',
+      dueDate,
+      subtotal,
+      vatAmount,
+      grandTotal,
+      status: 'pending',
+      description
+    };
+
+    addInvoice(newInv);
+    setIsModalOpen(false);
+    setCustomer('');
+    setDescription('');
+    setSubtotalStr('');
+  };
+
+  return (
+    <div className="flex-1 flex flex-col min-w-0">
+      <Header
+        title={UI.finance.invoicesTitle}
+        subtitle={UI.finance.invoicesSubtitle}
+      />
+
+      <div className="p-8 space-y-6">
+        <div className="flex items-center justify-between gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+          <div className="flex items-center gap-3 flex-1 max-w-md">
+            <div className="relative w-full">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder={UI.common.search}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-slate-400" />
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="text-sm border border-slate-200 rounded-lg px-3 py-2 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="all">{UI.common.all}</option>
+                <option value="pending">{UI.common.pending}</option>
+                <option value="paid">{UI.common.paid}</option>
+                <option value="overdue">{UI.common.overdue}</option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold shadow-sm transition-colors"
+          >
+            <Plus className="w-4 h-4" />
+            <span>{UI.finance.newInvoice}</span>
+          </button>
+        </div>
+
+        {/* Invoices Table */}
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-slate-50 text-slate-600 text-xs font-semibold uppercase tracking-wider border-b border-slate-200">
+              <tr>
+                <th className="py-3 px-4">{UI.finance.invoiceNo}</th>
+                <th className="py-3 px-4">{UI.finance.customer}</th>
+                <th className="py-3 px-4">{UI.finance.issueDate}</th>
+                <th className="py-3 px-4">{UI.finance.dueDate}</th>
+                <th className="py-3 px-4 text-right">{UI.finance.subtotal}</th>
+                <th className="py-3 px-4 text-right">{UI.finance.grandTotal}</th>
+                <th className="py-3 px-4 text-center">{UI.common.status}</th>
+                <th className="py-3 px-4 text-center">{UI.common.actions}</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {filtered.map((inv) => (
+                <tr key={inv.id} className="hover:bg-slate-50/70">
+                  <td className="py-3.5 px-4 font-mono font-bold text-blue-700">
+                    {inv.invoiceNo}
+                  </td>
+                  <td className="py-3.5 px-4">
+                    <p className="font-medium text-slate-800">{inv.customer}</p>
+                    <p className="text-xs text-slate-500">{inv.description}</p>
+                  </td>
+                  <td className="py-3.5 px-4 text-slate-600 text-xs">{inv.issueDate}</td>
+                  <td className="py-3.5 px-4 text-slate-600 text-xs">{inv.dueDate}</td>
+                  <td className="py-3.5 px-4 text-right font-mono text-slate-700">
+                    {formatCurrency(inv.subtotal)}
+                  </td>
+                  <td className="py-3.5 px-4 text-right font-mono font-bold text-slate-900">
+                    {formatCurrency(inv.grandTotal)}
+                  </td>
+                  <td className="py-3.5 px-4 text-center">
+                    <span
+                      className={`inline-block px-2.5 py-0.5 rounded-full text-xs font-medium border ${
+                        inv.status === 'paid'
+                          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          : inv.status === 'overdue'
+                          ? 'bg-rose-50 text-rose-700 border-rose-200'
+                          : 'bg-amber-50 text-amber-700 border-amber-200'
+                      }`}
+                    >
+                      {inv.status === 'paid'
+                        ? UI.common.paid
+                        : inv.status === 'overdue'
+                        ? UI.common.overdue
+                        : UI.common.pending}
+                    </span>
+                  </td>
+                  <td className="py-3.5 px-4 text-center">
+                    {inv.status !== 'paid' ? (
+                      <button
+                        onClick={() => updateInvoiceStatus(inv.id, 'paid')}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium bg-emerald-600 text-white rounded hover:bg-emerald-700 transition-colors"
+                      >
+                        <CheckCircle className="w-3.5 h-3.5" />
+                        <span>{UI.finance.recordPayment}</span>
+                      </button>
+                    ) : (
+                      <span className="text-xs text-slate-400 font-medium">{UI.common.emptyValue}</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* New Invoice Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full border border-slate-200 shadow-xl overflow-hidden animate-scale-up">
+            <div className="p-5 border-b border-slate-200 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Receipt className="w-5 h-5 text-blue-600" />
+                <h3 className="font-bold text-slate-800 text-base">
+                  {UI.finance.newInvoice}
+                </h3>
+              </div>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600"
+              >
+                {UI.common.close}
+              </button>
+            </div>
+
+            <form onSubmit={handleCreate} className="p-6 space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  {UI.finance.customer}
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder={UI.finance.customer}
+                  value={customer}
+                  onChange={(e) => setCustomer(e.target.value)}
+                  className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  {UI.common.description}
+                </label>
+                <input
+                  type="text"
+                  placeholder={UI.common.description}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    {UI.finance.subtotal}
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="any"
+                    required
+                    placeholder={UI.common.zeroAmount}
+                    value={subtotalStr}
+                    onChange={(e) => setSubtotalStr(e.target.value)}
+                    className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none font-mono"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    {UI.finance.dueDate}
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={dueDate}
+                    onChange={(e) => setDueDate(e.target.value)}
+                    className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Automatic Calculation Preview */}
+              <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 text-xs space-y-1 font-mono">
+                <div className="flex justify-between text-slate-600">
+                  <span>{UI.finance.vatAmount}:</span>
+                  <span>{formatCurrency(vatAmount)}</span>
+                </div>
+                <div className="flex justify-between font-bold text-slate-900 pt-1 border-t border-slate-200">
+                  <span>{UI.finance.grandTotal}:</span>
+                  <span>{formatCurrency(grandTotal)}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg"
+                >
+                  {UI.common.cancel}
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-sm"
+                >
+                  {UI.common.save}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

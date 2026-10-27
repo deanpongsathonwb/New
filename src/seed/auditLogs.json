@@ -1,0 +1,38 @@
+[
+  {
+    "id": "log-001",
+    "timestamp": "2026-10-27 08:30:14",
+    "actor": "นันท์นภัส บริสุทธิ์บัญชี",
+    "role": "accountant",
+    "actionType": "POST_JOURNAL",
+    "entity": "JV-2569-003",
+    "ipAddress": "192.168.1.104"
+  },
+  {
+    "id": "log-002",
+    "timestamp": "2026-10-27 08:15:22",
+    "actor": "ชนินทร์ การเงินเลิศ",
+    "role": "finance",
+    "actionType": "APPROVE_BILL",
+    "entity": "BILL-2569-001",
+    "ipAddress": "192.168.1.108"
+  },
+  {
+    "id": "log-003",
+    "timestamp": "2026-10-26 17:42:01",
+    "actor": "ดร.วิชัย ธรรมาภิบาล",
+    "role": "auditor",
+    "actionType": "AUDIT_VERIFY",
+    "entity": "TRIAL_BALANCE_Q3",
+    "ipAddress": "192.168.1.15"
+  },
+  {
+    "id": "log-004",
+    "timestamp": "2026-10-26 16:10:00",
+    "actor": "กฤษฎา ผู้ดูแลระบบ",
+    "role": "admin",
+    "actionType": "BACKUP_SYSTEM",
+    "entity": "SNAPSHOT_AUTO_25691026",
+    "ipAddress": "192.168.1.2"
+  }
+]

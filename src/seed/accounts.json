@@ -1,0 +1,146 @@
+[
+  {
+    "id": "acc-101",
+    "code": "1100",
+    "name": "เงินสดในมือ",
+    "type": "asset",
+    "normalBalance": "debit",
+    "balance": 150000,
+    "status": "active"
+  },
+  {
+    "id": "acc-102",
+    "code": "1110",
+    "name": "เงินฝากกระแสรายวัน - ธนาคารกสิกรไทย",
+    "type": "asset",
+    "normalBalance": "debit",
+    "balance": 2480000,
+    "status": "active"
+  },
+  {
+    "id": "acc-103",
+    "code": "1120",
+    "name": "ลูกหนี้การค้า",
+    "type": "asset",
+    "normalBalance": "debit",
+    "balance": 820000,
+    "status": "active"
+  },
+  {
+    "id": "acc-104",
+    "code": "1130",
+    "name": "สินค้าคงเหลือและพัสดุ",
+    "type": "asset",
+    "normalBalance": "debit",
+    "balance": 450000,
+    "status": "active"
+  },
+  {
+    "id": "acc-105",
+    "code": "1200",
+    "name": "อุปกรณ์สำนักงานและเทคโนโลยีสารสนเทศ",
+    "type": "asset",
+    "normalBalance": "debit",
+    "balance": 1650000,
+    "status": "active"
+  },
+  {
+    "id": "acc-201",
+    "code": "2100",
+    "name": "เจ้าหนี้การค้า",
+    "type": "liability",
+    "normalBalance": "credit",
+    "balance": 520000,
+    "status": "active"
+  },
+  {
+    "id": "acc-202",
+    "code": "2110",
+    "name": "ค่าใช้จ่ายค้างจ่าย",
+    "type": "liability",
+    "normalBalance": "credit",
+    "balance": 185000,
+    "status": "active"
+  },
+  {
+    "id": "acc-203",
+    "code": "2120",
+    "name": "ภาษีมูลค่าเพิ่มรอนำส่ง (ภ.พ.30)",
+    "type": "liability",
+    "normalBalance": "credit",
+    "balance": 95000,
+    "status": "active"
+  },
+  {
+    "id": "acc-301",
+    "code": "3100",
+    "name": "ทุนเรือนหุ้นที่ชำระแล้ว",
+    "type": "equity",
+    "normalBalance": "credit",
+    "balance": 4000000,
+    "status": "active"
+  },
+  {
+    "id": "acc-302",
+    "code": "3200",
+    "name": "กำไรสะสมยกมา",
+    "type": "equity",
+    "normalBalance": "credit",
+    "balance": 750000,
+    "status": "active"
+  },
+  {
+    "id": "acc-401",
+    "code": "4100",
+    "name": "รายได้จากการให้บริการและที่ปรึกษา",
+    "type": "revenue",
+    "normalBalance": "credit",
+    "balance": 2150000,
+    "status": "active"
+  },
+  {
+    "id": "acc-402",
+    "code": "4200",
+    "name": "รายได้ดอกเบี้ยรับ",
+    "type": "revenue",
+    "normalBalance": "credit",
+    "balance": 35000,
+    "status": "active"
+  },
+  {
+    "id": "acc-501",
+    "code": "5100",
+    "name": "ต้นทุนการให้บริการและพัฒนาระบบ",
+    "type": "expense",
+    "normalBalance": "debit",
+    "balance": 860000,
+    "status": "active"
+  },
+  {
+    "id": "acc-502",
+    "code": "5200",
+    "name": "เงินเดือน ค่าล่วงเวลา และสวัสดิการ",
+    "type": "expense",
+    "normalBalance": "debit",
+    "balance": 920000,
+    "status": "active"
+  },
+  {
+    "id": "acc-503",
+    "code": "5300",
+    "name": "ค่าเช่าสถานที่และสาธารณูปโภค",
+    "type": "expense",
+    "normalBalance": "debit",
+    "balance": 245000,
+    "status": "active"
+  },
+  {
+    "id": "acc-504",
+    "code": "5400",
+    "name": "ค่าธรรมเนียมวิชาชีพและสอบบัญชี",
+    "type": "expense",
+    "normalBalance": "debit",
+    "balance": 160000,
+    "status": "active"
+  }
+]

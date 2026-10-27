@@ -1,0 +1,74 @@
+[
+  {
+    "id": "jv-001",
+    "journalNumber": "JV-2569-001",
+    "date": "2026-10-01",
+    "memo": "บันทึกรับชำระเงินค่าบริการวางระบบจากลูกหนี้การค้า",
+    "status": "posted",
+    "createdBy": "นันท์นภัส บริสุทธิ์บัญชี",
+    "lines": [
+      {
+        "accountId": "acc-102",
+        "accountCode": "1110",
+        "accountName": "เงินฝากกระแสรายวัน - ธนาคารกสิกรไทย",
+        "debit": 321000,
+        "credit": 0
+      },
+      {
+        "accountId": "acc-103",
+        "accountCode": "1120",
+        "accountName": "ลูกหนี้การค้า",
+        "debit": 0,
+        "credit": 321000
+      }
+    ]
+  },
+  {
+    "id": "jv-002",
+    "journalNumber": "JV-2569-002",
+    "date": "2026-10-15",
+    "memo": "จ่ายชำระค่าเช่าสำนักงานและสาธารณูปโภคประจำงวด",
+    "status": "posted",
+    "createdBy": "นันท์นภัส บริสุทธิ์บัญชี",
+    "lines": [
+      {
+        "accountId": "acc-503",
+        "accountCode": "5300",
+        "accountName": "ค่าเช่าสถานที่และสาธารณูปโภค",
+        "debit": 85000,
+        "credit": 0
+      },
+      {
+        "accountId": "acc-102",
+        "accountCode": "1110",
+        "accountName": "เงินฝากกระแสรายวัน - ธนาคารกสิกรไทย",
+        "debit": 0,
+        "credit": 85000
+      }
+    ]
+  },
+  {
+    "id": "jv-003",
+    "journalNumber": "JV-2569-003",
+    "date": "2026-10-25",
+    "memo": "บันทึกตั้งหนี้เงินเดือนและผลประโยชน์พนักงานสิ้นเดือน",
+    "status": "posted",
+    "createdBy": "นันท์นภัส บริสุทธิ์บัญชี",
+    "lines": [
+      {
+        "accountId": "acc-502",
+        "accountCode": "5200",
+        "accountName": "เงินเดือน ค่าล่วงเวลา และสวัสดิการ",
+        "debit": 450000,
+        "credit": 0
+      },
+      {
+        "accountId": "acc-202",
+        "accountCode": "2110",
+        "accountName": "ค่าใช้จ่ายค้างจ่าย",
+        "debit": 0,
+        "credit": 450000
+      }
+    ]
+  }
+]

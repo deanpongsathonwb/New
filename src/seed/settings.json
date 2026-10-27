@@ -1,0 +1,15 @@
+{
+  "systemOwner": "บริษัท สยามพาณิชย์บัญชีและการค้า จำกัด (มหาชน)",
+  "taxId": "0107564000189",
+  "fiscalYear": "2569",
+  "accountingMethod": "เกณฑ์คงค้าง (Accrual Basis)",
+  "defaultVatRate": 7,
+  "withholdingTaxRate": 3,
+  "allowBackdatedEntries": true,
+  "requireDoubleApproval": false,
+  "autoJournalNumbering": true,
+  "invoicePrefix": "INV-2569-",
+  "billPrefix": "BILL-2569-",
+  "journalPrefix": "JV-2569-",
+  "currencyCode": "THB"
+}
